@@ -595,6 +595,7 @@ const Home = () => {
             <NavLink href="#dashboard" text="Dashboard" />
             <NavLink href="#comparison" text="Comparison" />
             <NavLink href="#features" text="Features" />
+               <a href="/main" className='bg-yellow-400 relative px-4 py-3 text-black border-2 border-black  shadow-lg shadow-black transition-all duration-300 rounded-3xl overflow-hidden cursor-pointer'> Get started </a>
           </div>
         </div>
       </nav>
