@@ -457,6 +457,7 @@ const Home = () => {
     <>
       <style>{`
         body {
+        
           background-color: white;
           color: #333;
         }
@@ -767,7 +768,7 @@ const Home = () => {
 
       {/* Comparison Section */}
       <section id="comparison" ref={el => sectionsRef.current[2] = el} className="py-24 bg-white text-gray-800">
-        <div className="container mx-auto px-4">
+        <div className="inter-font container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold">Transformation Impact Analysis</h2>
             <p className="mt-4 text-gray-600">Witness the dramatic improvements in traffic efficiency and urban mobility</p>
@@ -780,7 +781,7 @@ const Home = () => {
 </div>
        
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="inter-font grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.keys(trafficData.beforeSystem).map(key => (
               <div key={key} className="bg-white h-56 p-6 rounded-xl  shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                 <div className="text-center">
@@ -802,7 +803,7 @@ const Home = () => {
 
       {/* Features Section */}
       <section id="features" ref={el => sectionsRef.current[3] = el} className="py-24 bg-gray-100 text-gray-800">
-        <div className="container mx-auto px-4">
+        <div className="inter-font container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">Advanced AI Features</h2>
             <p className="mt-4 text-gray-600">Cutting-edge technology powering the future of intelligent traffic management</p>
@@ -881,7 +882,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-gray-400 py-12">
+      <footer className="inter-font bg-gray-800 text-gray-400 py-12">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center space-x-3 mb-4">

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Dropdown.css"
+import "./DropDown.css"
 const DoodleCard = ({ title, children, className = '' }) => {
   return (
     <div className={`doodle-border flex flex-col p-4 bg-white ${className}`}>

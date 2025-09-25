@@ -1,61 +1,88 @@
-import "./Dashboard.css"
-import DropDown from "./components/Dropdown"
+import TrafficTable from "./components/Table"
+import Card from "./components/card";
 import DoodleButton from "./components/doodleButton"
-import { MdOutlineAccessTime } from 'react-icons/md';
-import { FaRegBell } from 'react-icons/fa';
-import DoodleCard from "./components/doodleCard";
-
-export default function Dashboard() {
-    return (
-
-
+import { FaTrafficLight } from "react-icons/fa";
+import { Progress } from "./components/ui/progress"
+export default function Dashboard()
+{
+    return(
         <>
-            <div className="flex w-[100vw] h-[100vh]">
-                <div className="p-2 flex flex-col schoolbell-regular bg-yellow-400 h-[100vh] w-54">
-                    <h1 className="text-4xl m-10 ">R.O.A.D.S</h1>
-                    <DropDown text="Choose The approach" title="All Approaches" values={["hello", "yello", "mellow"]} />
-                    <DropDown text="Lane:" title="All Approaches" values={["hello", "yello", "mellow"]} />
-                    <DropDown text="Time Window" title="All Approaches" values={["hello", "yello", "mellow"]} />
-                    <DoodleButton text="Apply" onClick={() => { }} />
+        <nav className={`montserrat-font  relative top-0 left-0 right-0 z-50 transition-all duration-400 backdrop-blur-xl `}>
+        <div className="container mx-auto px-4 py-4 flex justify-center gap-20 items-center">
+          <div className="flex items-center space-x-3">
+            <div className="text-3xl text-gray-800">🚦</div>
+            <span className="text-xl font-bold text-gray-800">Traffic-Slashers</span>
+          </div>
+          <div className="flex space-x-6">
+            <a href="#home" text="Home" />
+            <a href="#dashboard" text="Dashboard" />
+            <a href="#comparison" text="Comparison" />
+            <a href="#features" text="Features" />
+               <a href="/main" className='bg-yellow-400 relative px-4 py-3 text-black border-2 border-black  shadow-lg shadow-black transition-all duration-300 rounded-3xl overflow-hidden cursor-pointer'> Get started </a>
+          </div>
+        </div>
+      </nav>
+ <div className="inter-font mt-3 mx-30">
+     <h2 className="font-bold text-5xl">Dashboard</h2>
+<h4>Real-Time Traffic monitoring and management</h4>
 
-                </div>
+        <div className="grid grid-cols-2 gap-20">
+         <div> {/*Col - 1 */} 
+         
+            <h4 className="mt-6">Interactive Traffic Flow</h4>
 
+            <img src="map-image.png" className="rounded-md"  alt="Map" />
 
-                <div className="w-full h-full bg-gray-100">
-                    <div className="flex gap-10  items-center justify-around w-[1080px] mx-20 mt-2  rounded-xl h-13 bg-green-300">
+            <h3 className="text-xl font-bold my-5">Lane Status</h3>
+            <TrafficTable/>
+          
 
-                        <div className="flex justify-center items-center"> 
-                            <h2 className="loved-by-the-king-regular p-3 text-xl">
-                                Jamaia Milia Islamia Rd
-                            </h2>
-                            <div className="flex gap-2">
-                                <MdOutlineAccessTime className="mt-[1.7px]" />
-                                <h2 className="text-sm">10:20:20</h2>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-center items-center gap-10">
-                            <h2>Model: Y2K 1 (92% accuracy) </h2>
-                            <FaRegBell/>
-                            <img className=" rounded-full border-4 border-yellow-400 w-10 h-10" src="https://live.staticflickr.com/5289/5216270546_c63e5361cc_b.jpg" alt="" />
-                            
-                        </div>
-
-
-
+            </div>   
 
 
+            <div className="mt-7"> {/*Col - 2 */}
+             <h3 className="inter-font text-2xl m-2">Congestion Levels</h3>
+                 <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+      <div className="p-6">
+        <h2 className="text-md mb-2">City Wide</h2>
+        <h2 className="text-3xl font-semibold mb-5 text-yellow-400">
+          Moderate
+        </h2>
 
-                    </div>
+        <Progress value={33}  className={"text-yellow-300 my-2"}/>
+        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
+              58% of major routes experiencing <br /> slowdowns
+        </p>
+
+      </div>
+    </div>
+ 
 
 
-                    <DoodleCard title="Traffic Density" className="w-96 h-96 m-10"/>
 
-
-                </div>
+            <h3 className="inter-font text-xl m-2 ">Key Metrics</h3>
+            <Card title={"Total Vehicles"} description={"12,456"}/>
+               <Card title={"Avg Speed"} description={"45 mph"}/>
+         
+            <h3 className="inter-font text-xl m-2">Critical Events</h3>
+            <Card title={"accident"}/>
+               <Card title={"Total Vehicles"} description={"12,456"}/>
+         
+            <Card title={"Total Vehicles"} description={"12,456"}/>
+         
+           
+           
             </div>
 
+
+        </div>
+
+
+
+
+
+        </div>
+        
         </>
     )
-
 }
