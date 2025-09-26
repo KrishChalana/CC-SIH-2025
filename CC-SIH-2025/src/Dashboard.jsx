@@ -5,17 +5,18 @@ import { FaTrafficLight } from "react-icons/fa";
 // import CongestionReport from "./Congestion_report";
 import { Progress } from "./components/ui/progress"
 import {Bell, ChevronDown, User} from 'lucide-react'
+import { TriangleAlert,Pickaxe ,Radar,BusFront} from 'lucide-react';
 export default function Dashboard()
 {
     return(
         <>
      <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200">
-    <div className="flex items-center space-x-8">
+    <div className="ml-5 flex items-center space-x-8">
       <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
       <nav className="hidden sm:flex space-x-6 text-sm">
-        <a href="#" className="text-gray-500 hover:text-blue-600">Dashboard</a>
-        <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Congestion Reports</a>
-        <a href="#" className="text-gray-500 hover:text-blue-600">Incident Management</a>
+        <a href="/main" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Dashboard</a>
+        <a href="/main/level" className="text-gray-500 hover:text-blue-600 ">Congestion Reports</a>
+        <a href="/main/lane" className="text-gray-500 hover:text-blue-600">Lane</a>
         <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
       </nav>
     </div>
@@ -36,8 +37,8 @@ export default function Dashboard()
   </header>
 
 
- <div className="inter-font mt-3 mx-30">
-     <h2 className="font-bold text-5xl">Dashboard</h2>
+ <div className="inter-font mt-5 mx-30">
+     <h2 className="font-bold text-4xl">Dashboard</h2>
 <h4>Real-Time Traffic monitoring and management</h4>
 
         <div className="grid grid-cols-2 gap-20">
@@ -63,7 +64,7 @@ export default function Dashboard()
           Moderate
         </h2>
 
-        <Progress value={33}  className={"text-yellow-300 my-2"}/>
+        <Progress value={33}  className={"bg-yellow-300 my-2"}/>
         <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
               58% of major routes experiencing <br /> slowdowns
         </p>
@@ -75,15 +76,47 @@ export default function Dashboard()
 
 
             <h3 className="inter-font text-xl m-2 ">Key Metrics</h3>
-            <Card title={"Total Vehicles"} description={"12,456"}/>
-               <Card title={"Avg Speed"} description={"45 mph"}/>
+            <Card title={"Total Vehicles"} description={"12,456"} logo={<BusFront className=""/>}/>
+               <Card title={"Avg Speed"} description={"45 mph"} logo={<Radar/>}/>
          
             <h3 className="inter-font text-xl m-2">Critical Events</h3>
-            <Card title={"accident"}/>
-               <Card title={"Total Vehicles"} description={"12,456"}/>
-         
-            <Card title={"Total Vehicles"} description={"12,456"}/>
-         
+           
+
+     <div className=" flex gap-10 items-center border-[0.5px] border-red-500 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+      <TriangleAlert className="text-red-500  mx-7 "/>
+      
+      <div className="p-6">
+        <h2 className="text-md mb-2 font-bold text-red-600">Accidents on Road-120</h2>
+        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
+              Lane 3 closure. Severe Delays <br/> expected 
+        </p>
+
+      </div>
+    </div>
+
+
+
+    <div className=" flex gap-10 items-center border-[0.5px] my-5 border-yellow-500 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+      <Pickaxe className="text-yellow-500  mx-7 "/>
+      
+      <div className="p-6">
+        <h2 className="text-md mb-2 font-bold text-yellow-500">Roadwork on Pheli Street</h2>
+        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
+              Minor congestion near downtown 
+        </p>
+
+      </div>
+    </div>
+ 
+ 
+
+
+
+
+
+
+
+
            
            
             </div>

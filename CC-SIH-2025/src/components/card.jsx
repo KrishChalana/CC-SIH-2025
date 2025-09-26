@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = ({ image, title, description }) => {
+const Card = ({ image, title, description ,logo}) => {
   return (
     <div className="mt-2 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
       {image && (
@@ -11,12 +11,18 @@ const Card = ({ image, title, description }) => {
         />
       )}
       <div className="p-6">
-        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-          {title}
-        </h2>
+        
         <p className="text-gray-600 dark:text-gray-300 mb-4">
-          {description}
+          {title}
         </p>
+
+        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+          {description}
+        </h2>
+
+      
+        {logo}      
+
 
       </div>
     </div>

@@ -571,7 +571,7 @@ const Home = () => {
               <div className="h-6 w-6 rounded-full bg-yellow-500/30 loader-light-yellow"></div>
               <div className="h-6 w-6 rounded-full bg-green-500/30 loader-light-green"></div>
             </div>
-            <div className="text-xl font-bold tracking-wider text-gray-800">Loading...</div>
+            <div className="inter-font text-xl font-bold tracking-wider text-gray-800">Loading...</div>
           </div>
         </div>
       )}
@@ -589,7 +589,7 @@ const Home = () => {
         <div className="container mx-auto px-4 py-4 flex justify-center gap-20 items-center">
           <div className="flex items-center space-x-3">
             <div className="text-3xl text-gray-800">🚦</div>
-            <span className="text-xl font-bold text-gray-800">Traffic-Slashers</span>
+            <span className="text-xl font-bold text-gray-800">R.O.A.D.S</span>
           </div>
           <div className="flex space-x-6">
             <NavLink href="#home" text="Home" />
@@ -887,7 +887,7 @@ const Home = () => {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="text-3xl">🚦</div>
-              <span className="text-xl text-white">Traffic-Slashers</span>
+              <span className="text-xl text-white">R.O.A.D.S</span>
             </div>
             <p className="text-sm mb-4">Revolutionizing urban mobility with intelligent traffic management solutions powered by cutting-edge AI technology.</p>
             <div className="flex space-x-4 text-xl">
@@ -924,7 +924,7 @@ const Home = () => {
           </div>
         </div>
         <div className="text-center text-xs mt-8">
-          <p>&copy; 2025 Traffic-Slashers. All rights reserved. | Powered by Advanced AI Technology</p>
+          <p>&copy; 2025 R.O.A.D.S. All rights reserved. | Powered by Advanced AI Technology</p>
         </div>
       </footer>
     </>

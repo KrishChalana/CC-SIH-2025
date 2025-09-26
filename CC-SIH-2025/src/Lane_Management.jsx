@@ -11,11 +11,10 @@ Bell,
 // --- Top Navigation Component ---
 const TopNav = () => {
   const navItems = [
-    { label: 'Overview', href: '#' },
-    { label: 'Lanes', href: '#', active: true },
-    { label: 'Intersections', href: '#' },
-    { label: 'Incidents', href: '#' },
-    { label: 'Settings', href: '#' },
+    { label: 'Overview', href: '/' },
+    { label: 'Lanes', href: '/lane', active: true },
+    { label: 'Congestion-Level', href: '/level' },
+    
   ];
 
   return (
@@ -184,14 +183,13 @@ const LaneManagementContent = () => {
 const LaneManagementDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
-    
-  <header className="flex justify-between items-center p-4 border-b border-gray-200">
+        <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200">
     <div className="flex items-center space-x-8">
       <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
       <nav className="hidden sm:flex space-x-6 text-sm">
-        <a href="#" className="text-gray-500 hover:text-blue-600">Dashboard</a>
-        <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Congestion Reports</a>
-        <a href="#" className="text-gray-500 hover:text-blue-600">Incident Management</a>
+        <a href="/main" className="text-gray-500 hover:text-blue-600">Dashboard</a>
+        <a href="/main/level" className="text-gray-500 hover:text-blue-600">Congestion Reports</a>
+        <a href="/main/lane" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Lane</a>
         <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
       </nav>
     </div>
@@ -210,6 +208,7 @@ const LaneManagementDashboard = () => {
       </div>
     </div>
   </header>
+
 
 
       <LaneManagementContent />

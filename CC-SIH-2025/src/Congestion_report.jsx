@@ -42,31 +42,33 @@ const StatusPill = ({ status }) => {
 
 // --- Header Component ---
 const Header = () => (
-  <header className="flex justify-between items-center p-4 border-b border-gray-200">
-    <div className="flex items-center space-x-8">
-      <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
-      <nav className="hidden sm:flex space-x-6 text-sm">
-        <a href="#" className="text-gray-500 hover:text-blue-600">Dashboard</a>
-        <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Congestion Reports</a>
-        <a href="#" className="text-gray-500 hover:text-blue-600">Incident Management</a>
-        <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
-      </nav>
-    </div>
-    <div className="flex items-center space-x-4">
-      <button className="p-2 rounded-full hover:bg-gray-100 relative">
-        <Bell className="w-5 h-5 text-gray-600" />
-        {/* Simple mock notification dot */}
-        <span className="absolute top-2 right-2 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
-      </button>
-      <div className="flex items-center space-x-2">
-        {/* Placeholder for user avatar/image */}
-        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
-            <User className="w-5 h-5 text-gray-600"/>
-        </div>
-        <ChevronDown className="w-4 h-4 text-gray-500" />
+   <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200">
+      <div className="flex items-center space-x-8">
+        <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
+        <nav className="hidden sm:flex space-x-6 text-sm">
+          <a href="/main" className="text-gray-500 hover:text-blue-600">Dashboard</a>
+          <a href="/main/level" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Congestion Reports</a>
+          <a href="/main/lane" className="text-gray-500  hover:border-blue-600">Lane</a>
+          <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
+        </nav>
       </div>
-    </div>
-  </header>
+      <div className="flex items-center space-x-4">
+        <button className="p-2 rounded-full hover:bg-gray-100 relative">
+          <Bell className="w-5 h-5 text-gray-600" />
+          {/* Simple mock notification dot */}
+          <span className="absolute top-2 right-2 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+        </button>
+        <div className="flex items-center space-x-2">
+          {/* Placeholder for user avatar/image */}
+          <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+              <User className="w-5 h-5 text-gray-600"/>
+          </div>
+          <ChevronDown className="w-4 h-4 text-gray-500" />
+        </div>
+      </div>
+    </header>
+  
+  
 );
 
 // --- Historical Congestion Chart Component (Simplified) ---
