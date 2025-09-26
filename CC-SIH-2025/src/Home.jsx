@@ -586,16 +586,13 @@ const Home = () => {
 
       {/* Navigation */}
       <nav className={`montserrat-font fixed top-0 left-0 right-0 z-50 transition-all duration-400 backdrop-blur-xl ${scrollY > 50 ? 'w-full pl-16 pr-32 rounded-3xl bg-white/80 shadow-lg' : 'bg-transparent'}`}>
-        <div className="container mx-auto px-4 py-4 flex justify-center gap-20 items-center">
+        <div className="container mx-auto px-4 py-4 flex justify-between gap-20 items-center">
           <div className="flex items-center space-x-3">
             <div className="text-3xl text-gray-800">🚦</div>
             <span className="text-xl font-bold text-gray-800">R.O.A.D.S</span>
           </div>
           <div className="flex space-x-6">
             <NavLink href="#home" text="Home" />
-            <NavLink href="#dashboard" text="Dashboard" />
-            <NavLink href="#comparison" text="Comparison" />
-            <NavLink href="#features" text="Features" />
                <a href="/main" className='bg-yellow-400 relative px-4 py-3 text-black border-2 border-black  shadow-lg shadow-black transition-all duration-300 rounded-3xl overflow-hidden cursor-pointer'> Get started </a>
           </div>
         </div>
@@ -639,12 +636,10 @@ const Home = () => {
               </div>
             </div>
             <div className="flex space-x-4">
-              <button onClick={() => scrollToSection('dashboard')} className="px-6 py-3 bg-gray-800 text-white rounded-full font-semibold transition-all duration-300 hover:bg-gray-700 hover:shadow-xl hover:scale-105">
+              <a href="/main" onClick={() => scrollToSection('dashboard')} className="px-6 py-3 bg-gray-800 text-white rounded-full font-semibold transition-all duration-300 hover:bg-gray-700 hover:shadow-xl hover:scale-105">
                 View Dashboard
-              </button>
-              <button onClick={() => scrollToSection('comparison')} className="px-6 py-3 bg-transparent border border-gray-400 text-gray-600 rounded-full font-semibold transition-all duration-300 hover:bg-gray-100 hover:scale-105">
-                See Results
-              </button>
+              </a>
+             
             </div>
           </div>
           <div className="hidden lg:block slide-in-right">
@@ -658,275 +653,6 @@ const Home = () => {
       </section>
 
       {/* Dashboard Section */}
-      <section id="dashboard" ref={el => sectionsRef.current[1] = el} className="inter-font py-24 bg-gray-100 text-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold glitch-effect" data-text="Real-Time Traffic Analytics">Real-Time Traffic Analytics</h2>
-            <p className="mt-4 text-gray-600">Monitor and optimize traffic flow with AI-powered insights and predictive algorithms</p>
-          </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-800 shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Live Traffic Metrics</h3>
-                <span className="text-green-500 flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                  <span>LIVE</span>
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-100 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{metrics.flow}</div>
-                  <div className="text-sm text-gray-500">Vehicles/Hour</div>
-                </div>
-                <div className="p-4 bg-gray-100 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{metrics.congestion}%</div>
-                  <div className="text-sm text-gray-500">Congestion</div>
-                </div>
-                <div className="p-4 bg-gray-100 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{metrics.waitTime}</div>
-                  <div className="text-sm text-gray-500">Min Wait Time</div>
-                </div>
-                <div className="p-4 bg-gray-100 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">${metrics.tax}</div>
-                  <div className="text-sm text-gray-500">Peak Zone Tax</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-gray-800 shadow-2xl col-span-1 md:col-span-2 lg:col-span-1 bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02]">
-              <h3 className="text-xl font-semibold mb-4">Traffic Flow Predictions</h3>
-              <div className="h-64">
-                <canvas ref={chartRef}></canvas>
-              </div>
-            </div>
-
-            <div className="border-gray-800 shadow-2xl bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Smart Traffic Control</h3>
-                <span className="px-3 py-1 text-xs bg-gray-200 text-gray-600 rounded-full">AI Mode</span>
-              </div>
-              <div className="space-y-4">
-                {trafficLights.map(light => (
-                  <div key={light.id} className="flex items-center space-x-4 p-3 bg-gray-100 rounded-lg">
-                    <div className="flex flex-col space-y-1">
-                      <div className={`h-3 w-3 rounded-full ${light.status === 'red' ? 'bg-red-500' : 'bg-red-500/20'}`}></div>
-                      <div className={`h-3 w-3 rounded-full ${light.status === 'yellow' ? 'bg-yellow-500' : 'bg-yellow-500/20'}`}></div>
-                      <div className={`h-3 w-3 rounded-full ${light.status === 'green' ? 'bg-green-500' : 'bg-green-500/20'}`}></div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium">{light.location}</div>
-                      <div className={`text-sm ${light.status === 'red' ? 'text-red-400' : light.status === 'yellow' ? 'text-yellow-400' : 'text-green-400'}`}>{light.status.charAt(0).toUpperCase() + light.status.slice(1)} - {light.timeRemaining}s</div>
-                    </div>
-                    <div className="text-xs text-gray-400">Next: {light.predictedNext.charAt(0).toUpperCase() + light.predictedNext.slice(1)}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="border-gray-800 shadow-2xl bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02]">
-              <h3 className="text-xl font-semibold mb-4">Live System Alerts</h3>
-              <div className="space-y-3">
-                {alerts.map((alert, index) => (
-                  <div key={index} className={`flex space-x-3 p-3 rounded-lg border-l-4 ${alert.type === 'info' ? 'bg-blue-500/10 border-blue-500' : alert.type === 'warning' ? 'bg-yellow-500/10 border-yellow-500' : 'bg-green-500/10 border-green-500'}`}>
-                    <div className="text-lg mt-2">
-                      {alert.type === 'info' ? <FaAngellist/> : alert.type === 'warning' ? <AiFillAlert/> : <FaRegThumbsUp/>}
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium">{alert.message}</div>
-                      <div className="text-xs text-gray-500">{alert.time}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button onClick={clearAlerts} className="mt-4 w-full px-4 py-2 text-sm bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                Clear All
-              </button>
-            </div>
-
-            <div className="border-gray-800 shadow-2xl bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02]">
-              <h3 className="text-xl font-semibold mb-4">Traffic Density Heatmap</h3>
-              <div className="relative h-48 w-full">
-                <div className="grid grid-cols-4 grid-rows-3 h-full w-full gap-1 p-1 bg-gray-200 rounded-lg">
-                  <div className="bg-green-500/40 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-yellow-500/60 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-red-500/80 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-green-500/40 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-yellow-500/60 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-red-500/80 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-red-500/80 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-yellow-500/60 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-green-500/40 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-yellow-500/60 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-green-500/40 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                  <div className="bg-green-500/40 w-full h-full cursor-pointer transition-all duration-300 hover:scale-110" onClick={toggleHeatmapCell}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Section */}
-      <section id="comparison" ref={el => sectionsRef.current[2] = el} className="py-24 bg-white text-gray-800">
-        <div className="inter-font container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold">Transformation Impact Analysis</h2>
-            <p className="mt-4 text-gray-600">Witness the dramatic improvements in traffic efficiency and urban mobility</p>
-          </div>
-
-          <div className='flex justify-center '>
-          <video className='w-[720px] my-2 mb-5  border-2 border-black shadow-2xl rounded-md' autoPlay loop muted>
-            <source src='v-2.mp4'/>
-          </video>
-</div>
-       
-
-          <div className="inter-font grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Object.keys(trafficData.beforeSystem).map(key => (
-              <div key={key} className="bg-white h-56 p-6 rounded-xl  shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-                <div className="text-center">
-                   <div className="font-bold text-2xl">{trafficData.beforeSystem[key][1]}</div>
-
-                  <h3 className="text-lg relative top-7 font-semibold mb-4 text-gray-800">{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</h3>
-                  <div className="relative top-8 flex items-center justify-center space-x-4">
-
-                    <div className="text-red-500 font-bold text-2xl">{trafficData.beforeSystem[key][0]}</div>
-                    <span className="text-gray-400">→</span>
-                    <div className="text-green-500 font-bold text-2xl">{trafficData.afterSystem[key]}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-      </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" ref={el => sectionsRef.current[3] = el} className="py-24 bg-gray-100 text-gray-800">
-        <div className="inter-font container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold">Advanced AI Features</h2>
-            <p className="mt-4 text-gray-600">Cutting-edge technology powering the future of intelligent traffic management</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="group relative h-96 [perspective:1000px]">
-              <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-center [backface-visibility:hidden]">
-                  <div className="text-4xl mb-4">🧠</div>
-                  <h3 className="text-xl font-semibold mb-2">Real-time Prediction</h3>
-                  <p className="text-sm text-gray-500">AI algorithms analyze traffic patterns to predict optimal signal timing</p>
-                </div>
-                <div className="absolute inset-0 bg-gray-100 p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <h4 className="text-xl font-semibold text-gray-800 mb-4">How it works:</h4>
-                  <ul className="text-sm text-gray-500 list-none text-left space-y-2">
-                    <li>✓ Machine learning models</li>
-                    <li>✓ Real-time sensor processing</li>
-                    <li>✓ Predictive flow optimization</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="group relative h-96 [perspective:1000px]">
-              <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-center [backface-visibility:hidden]">
-                  <div className="text-4xl mb-4">💰</div>
-                  <h3 className="text-xl font-semibold mb-2">Dynamic Pricing</h3>
-                  <p className="text-sm text-gray-500">Congestion-based tax system that adapts to real-time traffic density</p>
-                </div>
-                <div className="absolute inset-0 bg-gray-100 p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <h4 className="text-xl font-semibold text-gray-800 mb-4">Benefits:</h4>
-                  <ul className="text-sm text-gray-500 list-none text-left space-y-2">
-                    <li>✓ Reduces peak congestion</li>
-                    <li>✓ Generates revenue</li>
-                    <li>✓ Encourages alternatives</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="group relative h-96 [perspective:1000px]">
-              <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-center [backface-visibility:hidden]">
-                  <div className="text-4xl mb-4">🗺️</div>
-                  <h3 className="text-xl font-semibold mb-2">Smart Routing</h3>
-                  <p className="text-sm text-gray-500">Intelligent route suggestions based on current traffic conditions</p>
-                </div>
-                <div className="absolute inset-0 bg-gray-100 p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <h4 className="text-xl font-semibold text-gray-800 mb-4">Capabilities:</h4>
-                  <ul className="text-sm text-gray-500 list-none text-left space-y-2">
-                    <li>✓ Real-time optimization</li>
-                    <li>✓ Multi-modal integration</li>
-                    <li>✓ Emergency priority</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="group relative h-96 [perspective:1000px]">
-              <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-center [backface-visibility:hidden]">
-                  <div className="text-4xl mb-4">🌿</div>
-                  <h3 className="text-xl font-semibold mb-2">Environmental Impact</h3>
-                  <p className="text-sm text-gray-500">Reduced emissions through optimized flow and fewer idle vehicles</p>
-                </div>
-                <div className="absolute inset-0 bg-gray-100 p-6 rounded-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <h4 className="text-xl font-semibold text-gray-800 mb-4">Benefits:</h4>
-                  <ul className="text-sm text-gray-500 list-none text-left space-y-2">
-                    <li>✓ Lower carbon emissions</li>
-                    <li>✓ Optimized fuel consumption</li>
-                    <li>✓ Improved air quality</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="inter-font bg-gray-800 text-gray-400 py-12">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="text-3xl">🚦</div>
-              <span className="text-xl text-white">R.O.A.D.S</span>
-            </div>
-            <p className="text-sm mb-4">Revolutionizing urban mobility with intelligent traffic management solutions powered by cutting-edge AI technology.</p>
-            <div className="flex space-x-4 text-xl">
-              <a href="#" className="hover:text-white transition-colors">🐦</a>
-              <a href="#" className="hover:text-white transition-colors">📘</a>
-              <a href="#" className="hover:text-white transition-colors">💼</a>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-4">Features</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#dashboard" className="hover:text-white transition-colors">Real-time Analytics</a></li>
-              <li><a href="#comparison" className="hover:text-white transition-colors">Performance Metrics</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">AI Predictions</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Dynamic Pricing</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-4">System Status</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span>All Systems Online</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-yellow-400">⚡</span>
-                <span>Real-time Processing</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-gray-400">🧠</span>
-                <span>AI Models Active</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="text-center text-xs mt-8">
-          <p>&copy; 2025 R.O.A.D.S. All rights reserved. | Powered by Advanced AI Technology</p>
-        </div>
-      </footer>
     </>
   );
 };

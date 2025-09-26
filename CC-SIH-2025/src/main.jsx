@@ -6,7 +6,7 @@ import { ReactLenis, useLenis } from 'lenis/react'
 import Dashboard  from "./Dashboard";
 import CongestionReport from "./Congestion_report";
 import LaneManagementDashboard from "./Lane_Management";
-
+import LaneStatus from "./LaneStatus";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
@@ -20,8 +20,8 @@ ReactDOM.createRoot(root).render(
       <Route path="/main" element={<Dashboard />} />
       <Route path="/main/level" element={<CongestionReport/>} />
       <Route path="/main/lane" element={<LaneManagementDashboard />} />
-      
-
+      {/* <Route path="/main/lane_status" element={<LaneStatus/>}/> */}
+{/* here we go again */}
     </Routes>
   </BrowserRouter>
 

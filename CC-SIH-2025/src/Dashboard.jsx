@@ -6,6 +6,7 @@ import { FaTrafficLight } from "react-icons/fa";
 import { Progress } from "./components/ui/progress"
 import {Bell, ChevronDown, User} from 'lucide-react'
 import { TriangleAlert,Pickaxe ,Radar,BusFront} from 'lucide-react';
+import LaneStatus from "./LaneStatus";
 export default function Dashboard()
 {
     return(
@@ -51,7 +52,7 @@ export default function Dashboard()
             <h3 className="text-xl font-bold my-5">Lane Status</h3>
             <TrafficTable/>
           
-
+            <LaneStatus/>
             </div>   
 
 
