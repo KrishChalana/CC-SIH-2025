@@ -2,26 +2,40 @@ import TrafficTable from "./components/Table"
 import Card from "./components/card";
 import DoodleButton from "./components/doodleButton"
 import { FaTrafficLight } from "react-icons/fa";
+// import CongestionReport from "./Congestion_report";
 import { Progress } from "./components/ui/progress"
+import {Bell, ChevronDown, User} from 'lucide-react'
 export default function Dashboard()
 {
     return(
         <>
-        <nav className={`montserrat-font  relative top-0 left-0 right-0 z-50 transition-all duration-400 backdrop-blur-xl `}>
-        <div className="container mx-auto px-4 py-4 flex justify-center gap-20 items-center">
-          <div className="flex items-center space-x-3">
-            <div className="text-3xl text-gray-800">🚦</div>
-            <span className="text-xl font-bold text-gray-800">Traffic-Slashers</span>
-          </div>
-          <div className="flex space-x-6">
-            <a href="#home" text="Home" />
-            <a href="#dashboard" text="Dashboard" />
-            <a href="#comparison" text="Comparison" />
-            <a href="#features" text="Features" />
-               <a href="/main" className='bg-yellow-400 relative px-4 py-3 text-black border-2 border-black  shadow-lg shadow-black transition-all duration-300 rounded-3xl overflow-hidden cursor-pointer'> Get started </a>
-          </div>
-        </div>
+     <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200">
+    <div className="flex items-center space-x-8">
+      <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
+      <nav className="hidden sm:flex space-x-6 text-sm">
+        <a href="#" className="text-gray-500 hover:text-blue-600">Dashboard</a>
+        <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Congestion Reports</a>
+        <a href="#" className="text-gray-500 hover:text-blue-600">Incident Management</a>
+        <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
       </nav>
+    </div>
+    <div className="flex items-center space-x-4">
+      <button className="p-2 rounded-full hover:bg-gray-100 relative">
+        <Bell className="w-5 h-5 text-gray-600" />
+        {/* Simple mock notification dot */}
+        <span className="absolute top-2 right-2 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+      </button>
+      <div className="flex items-center space-x-2">
+        {/* Placeholder for user avatar/image */}
+        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+            <User className="w-5 h-5 text-gray-600"/>
+        </div>
+        <ChevronDown className="w-4 h-4 text-gray-500" />
+      </div>
+    </div>
+  </header>
+
+
  <div className="inter-font mt-3 mx-30">
      <h2 className="font-bold text-5xl">Dashboard</h2>
 <h4>Real-Time Traffic monitoring and management</h4>
