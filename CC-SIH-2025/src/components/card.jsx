@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = ({ image, title, description ,logo}) => {
   return (
-    <div className="mt-2 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+    <div className="mt-2 w-full max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
       {image && (
         <img
           className="w-full h-48 object-cover"

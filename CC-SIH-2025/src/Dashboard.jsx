@@ -1,136 +1,153 @@
-import TrafficTable from "./components/Table"
+import TrafficTable from "./components/Table";
 import Card from "./components/card";
-import DoodleButton from "./components/doodleButton"
+import DoodleButton from "./components/doodleButton";
 import { FaTrafficLight } from "react-icons/fa";
-// import CongestionReport from "./Congestion_report";
-import { Progress } from "./components/ui/progress"
-import {Bell, ChevronDown, User} from 'lucide-react'
-import { TriangleAlert,Pickaxe ,Radar,BusFront} from 'lucide-react';
+import { Progress } from "./components/ui/progress";
+import { Bell, ChevronDown, User } from "lucide-react";
+import { TriangleAlert, Radar, BusFront, Activity } from "lucide-react";
 import LaneStatus from "./LaneStatus";
-export default function Dashboard()
-{
-    return(
-        <>
-     <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200">
-    <div className="ml-5 flex items-center space-x-8">
-      <h1 className="text-xl font-bold text-gray-800">Traffic Control AI</h1>
-      <nav className="hidden sm:flex space-x-6 text-sm">
-        <a href="/main" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Dashboard</a>
-        <a href="/main/level" className="text-gray-500 hover:text-blue-600 ">Congestion Reports</a>
-        <a href="/main/lane" className="text-gray-500 hover:text-blue-600">Lane</a>
-        <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
-      </nav>
-    </div>
-    <div className="flex items-center space-x-4">
-      <button className="p-2 rounded-full hover:bg-gray-100 relative">
-        <Bell className="w-5 h-5 text-gray-600" />
-        {/* Simple mock notification dot */}
-        <span className="absolute top-2 right-2 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
-      </button>
-      <div className="flex items-center space-x-2">
-        {/* Placeholder for user avatar/image */}
-        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
-            <User className="w-5 h-5 text-gray-600"/>
+import { useState } from "react";
+import { SafetyTable } from "./components/Safetytable";
+import { PriorityScoreTable } from "./components/ProrityScoreTable";
+
+export default function Dashboard() {
+  const [Lane, ChangeLane] = useState([
+    "TS-A01",
+    "TS-A02",
+    "TS-A03",
+    "TS-A04",
+  ]);
+
+  return (
+    <>
+      {/* Header */}
+      <header className="inter-font flex justify-between items-center p-4 border-b border-gray-200 bg-white shadow-sm">
+        <div className="ml-5 flex items-center space-x-8">
+          <h1 className="text-xl font-bold text-gray-800">
+            Traffic Control AI
+          </h1>
+          <nav className="hidden sm:flex space-x-6 text-sm">
+            <a
+              href="/main"
+              className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1"
+            >
+              Dashboard
+            </a>
+            <a
+              href="/main/level"
+              className="text-gray-500 hover:text-blue-600 "
+            >
+              Congestion Reports
+            </a>
+            <a
+              href="/main/lane"
+              className="text-gray-500 hover:text-blue-600"
+            >
+              Lane
+            </a>
+            <a href="#" className="text-gray-500 hover:text-blue-600">
+              Settings
+            </a>
+          </nav>
         </div>
-        <ChevronDown className="w-4 h-4 text-gray-500" />
-      </div>
-    </div>
-  </header>
+        <div className="flex items-center space-x-4">
+          <button className="p-2 rounded-full hover:bg-gray-100 relative">
+            <Bell className="w-5 h-5 text-gray-600" />
+            <span className="absolute top-2 right-2 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+          </button>
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+              <User className="w-5 h-5 text-gray-600" />
+            </div>
+            <ChevronDown className="w-4 h-4 text-gray-500" />
+          </div>
+        </div>
+      </header>
 
-
- <div className="inter-font mt-5 mx-30">
-     <h2 className="font-bold text-4xl">Dashboard</h2>
-<h4>Real-Time Traffic monitoring and management</h4>
+      {/* Main Content */}
+      <div className="inter-font mt-5 px-10">
+        <h2 className="font-bold text-4xl">Dashboard</h2>
+        <h4 className="text-gray-600">
+          Real-Time Traffic monitoring and management
+        </h4>
 
         <div className="grid grid-cols-2 gap-20">
-         <div> {/*Col - 1 */} 
-         
-            <h4 className="mt-6">Interactive Traffic Flow</h4>
+          {/* Column 1 */}
+          <div>
+            <h4 className="mt-6 font-semibold text-gray-700">
+              Interactive Traffic Flow
+            </h4>
+            <LaneStatus ChangeLane={ChangeLane} />
+          <h3 className="relative top-15 text-xl font-bold">Lane Status</h3>
 
-            <img src="map-image.png" className="rounded-md"  alt="Map" />
-
-            <h3 className="text-xl font-bold my-5">Lane Status</h3>
-            <TrafficTable/>
           
-            <LaneStatus/>
-            </div>   
+          </div>
 
+          {/* Column 2 */}
+          <div className="mt-7 space-y-6">
+            <h3 className="inter-font text-2xl m-2">Phase-2</h3>
+              <SafetyTable lanes={Lane}/>
+{/*           
+            <div className="bg-white p-6 rounded-xl shadow-md border-[0.5px] border-red-500">
+              <h4 className="font-semibold text-lg text-red-600 mb-4">
+                Safety Overview
+              </h4>
+              <div className="space-y-3 text-sm text-gray-700">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <TriangleAlert className="w-4 h-4 text-red-500 mr-2" />
+                    Hard Braking
+                  </span>
+                  <span className="font-bold text-red-600">
+                    {Lane.length * 3}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Activity className="w-4 h-4 text-red-500 mr-2" />
+                    Tailgating
+                  </span>
+                  <span className="font-bold text-red-600">
+                    {Lane.length * 2}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <FaTrafficLight className="w-4 h-4 text-red-500 mr-2" />
+                    Avg Safety Score
+                  </span>
+                  <span className="font-bold text-red-600">
+                    {Lane.length * 4}%
+                  </span>
+                </div>
+              </div>
+            </div> */}
 
-            <div className="mt-7"> {/*Col - 2 */}
-             <h3 className="inter-font text-2xl m-2">Congestion Levels</h3>
-                 <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
-      <div className="p-6">
-        <h2 className="text-md mb-2">City Wide</h2>
-        <h2 className="text-3xl font-semibold mb-5 text-yellow-400">
-          Moderate
-        </h2>
-
-        <Progress value={33}  className={"bg-yellow-300 my-2"}/>
-        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
-              58% of major routes experiencing <br /> slowdowns
-        </p>
-
-      </div>
-    </div>
- 
-
-
-
-            <h3 className="inter-font text-xl m-2 ">Key Metrics</h3>
-            <Card title={"Total Vehicles"} description={"12,456"} logo={<BusFront className=""/>}/>
-               <Card title={"Avg Speed"} description={"45 mph"} logo={<Radar/>}/>
+            {/* Key Metrics */}
+            <h3 className="inter-font text-xl font-bold m-2">Key Metrics</h3>
          
-            <h3 className="inter-font text-xl m-2">Critical Events</h3>
-           
+         <div className="flex gap-2  justify-around ">
+  <Card
+              title={"Total Vehicles"}
+              description={"12,456"}
+              logo={<BusFront />}
+            />
+            <Card title={"Avg Speed"} description={"45 mph"} logo={<Radar />} />
+          
+         </div>
 
-     <div className=" flex gap-10 items-center border-[0.5px] border-red-500 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
-      <TriangleAlert className="text-red-500  mx-7 "/>
-      
-      <div className="p-6">
-        <h2 className="text-md mb-2 font-bold text-red-600">Accidents on Road-120</h2>
-        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
-              Lane 3 closure. Severe Delays <br/> expected 
-        </p>
-
-      </div>
-    </div>
-
-
-
-    <div className=" flex gap-10 items-center border-[0.5px] my-5 border-yellow-500 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800">
-      <Pickaxe className="text-yellow-500  mx-7 "/>
-      
-      <div className="p-6">
-        <h2 className="text-md mb-2 font-bold text-yellow-500">Roadwork on Pheli Street</h2>
-        <p className="text-gray-800 text-sm dark:text-gray-200 mb-4">
-              Minor congestion near downtown 
-        </p>
-
-      </div>
-    </div>
- 
- 
+          <PriorityScoreTable lanes={Lane}/>
 
 
 
 
 
-
-
-
-           
-           
-            </div>
-
-
+          </div>
         </div>
 
-
-
-
-
-        </div>
-        
-        </>
-    )
+        {/* Lane Table */}
+                <TrafficTable Lane={Lane} />
+      </div>
+    </>
+  );
 }

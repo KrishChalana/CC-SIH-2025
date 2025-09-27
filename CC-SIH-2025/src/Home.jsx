@@ -603,11 +603,11 @@ const Home = () => {
         <div className="container mx-auto px-4 py-24 z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="slide-in-up">
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-8">
-              <span className={`px-10 py-5   block text-gray-800 transition-all bg-yellow-400`}>Intelligent Traffic</span>
-              <span className="block text-gray-600">Decongestion System</span>
+              <span className={`px-10 py-5   block text-gray-800 transition-all bg-yellow-400`}>R.O.A.D.S</span>
+              <span className="block text-gray-600"></span>
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Revolutionizing urban mobility with AI-powered traffic optimization, real-time predictions, and smart congestion pricing that adapts to city dynamics.
+              ROADS is a multi-layered, AI-powered software system that transforms standard traffic signals into intelligent agents. Using our fine-tuned YOLOv12l model, the system analyzes video feeds to measure real-time traffic demand
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="bg-gray-100 p-5 rounded-xl border border-gray-200 transition-all duration-300 hover:scale-105">
