@@ -1,61 +1,120 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import { Proportions } from "lucide-react";
+
+// Formula to calculate clear time
+const calculateClearTime = (vehicles) => {
+  if (vehicles <= 0) return 0;
+
+  // For up to 4 vehicles, sum fixed values
+  const baseTimes = [3.1, 2.8, 2.7, 2.2];
+  if (vehicles <= 4) {
+    return baseTimes.slice(0, vehicles).reduce((a, b) => a + b, 0);
+  }
+
+  // More than 4 → add (N-4)*2.1
+  return baseTimes.reduce((a, b) => a + b, 0) + (vehicles - 4) * 2.1;
+};
 
 // Fake intersection data
 const fakeData = {
   A: [
-    { name: "North", signal: "green", time: 20, score: 80, vehicles: 5 },
-    { name: "East", signal: "yellow", time: 0, score: 60, vehicles: 3 },
-    { name: "South", signal: "red", time: 0, score: 45, vehicles: 4 },
-    { name: "West", signal: "red", time: 0, score: 30, vehicles: 2 },
+    { name: "North", signal: "green", score: 80, vehicles: Math.random() * 50 },
+    { name: "East", signal: "red", score: 60, vehicles: Math.random() * 23 },
+    { name: "South", signal: "red", score: 45, vehicles: Math.random() *24 },
+    { name: "West", signal: "red", score: 30, vehicles: Math.random() *32 },
   ],
   B: [
-    { name: "North", signal: "red", time: 0, score: 25, vehicles: 6 },
-    { name: "East", signal: "green", time: 25, score: 90, vehicles: 4 },
-    { name: "South", signal: "yellow", time: 0, score: 65, vehicles: 5 },
-    { name: "West", signal: "red", time: 0, score: 35, vehicles: 3 },
+    { name: "North", signal: "green", score: 25, vehicles: Math.random() *36 },
+    { name: "East", signal: "red", score: 90, vehicles: Math.random() * 24 },
+    { name: "South", signal: "red", score: 65, vehicles: Math.random() * 25 },
+    { name: "West", signal: "red", score: 35, vehicles: Math.random() * 13 },
   ],
   C: [
-    { name: "North", signal: "yellow", time: 0, score: 55, vehicles: 2 },
-    { name: "East", signal: "red", time: 0, score: 40, vehicles: 3 },
-    { name: "South", signal: "green", time: 30, score: 85, vehicles: 6 },
-    { name: "West", signal: "red", time: 0, score: 25, vehicles: 1 },
+    { name: "North", signal: "green", score: 55, vehicles: Math.random() * 22 },
+    { name: "East", signal: "red", score: 40, vehicles: Math.random() *  33 },
+    { name: "South", signal: "red", score: 85, vehicles: Math.random() * 50 },
+    { name: "West", signal: "red", score: 25, vehicles: Math.random() * 11 },
   ],
 };
 
 export default function LaneStatus({ ChangeLane }) {
   const [intersection, setIntersection] = useState("A");
-  const [lanes, setLanes] = useState(fakeData["A"]);
+const fakeData = {
+  A: [
+    { name: "North", signal: "green", score: 80, vehicles: Math.random() * 50 },
+    { name: "East", signal: "red", score: 60, vehicles: Math.random() * 23 },
+    { name: "South", signal: "red", score: 45, vehicles: Math.random() *24 },
+    { name: "West", signal: "red", score: 30, vehicles: Math.random() *32 },
+  ],
+  B: [
+    { name: "North", signal: "green", score: 25, vehicles: Math.random() *36 },
+    { name: "East", signal: "red", score: 90, vehicles: Math.random() * 24 },
+    { name: "South", signal: "red", score: 65, vehicles: Math.random() * 25 },
+    { name: "West", signal: "red", score: 35, vehicles: Math.random() * 13 },
+  ],
+  C: [
+    { name: "North", signal: "green", score: 55, vehicles: Math.random() * 22 },
+    { name: "East", signal: "red", score: 40, vehicles: Math.random() *  33 },
+    { name: "South", signal: "red", score: 85, vehicles: Math.random() * 50 },
+    { name: "West", signal: "red", score: 25, vehicles: Math.random() * 11 },
+  ],
+};
 
+  // Initialize lanes with correct green time
+  const [lanes, setLanes] = useState(() =>
+    fakeData["A"].map((lane) => ({
+      ...lane,
+      time: lane.signal === "green" ? Math.ceil(calculateClearTime(lane.vehicles)) : 0,
+    }))
+  );
+
+  // Send lane IDs to parent
   useEffect(() => {
     const newLaneNames = lanes.map((_, idx) => `TS-${intersection}0${idx + 1}`);
-    ChangeLane(newLaneNames);
+    if (ChangeLane) ChangeLane(newLaneNames);
   }, [lanes, intersection, ChangeLane]);
 
-  // Timer countdown effect
+  // Signal cycle
   useEffect(() => {
     const interval = setInterval(() => {
-      setLanes((prev) =>
-        prev.map((lane) =>
-          lane.signal === "green" && lane.time > 0
-            ? { ...lane, time: lane.time - 1 }
-            : lane
-        )
-      );
+      setLanes((prev) => {
+        let updated = [...prev];
+        let greenIdx = updated.findIndex((lane) => lane.signal === "green");
+
+        if (greenIdx === -1) return updated;
+
+        if (updated[greenIdx].time > 1) {
+          // countdown
+          updated[greenIdx].time -= 1;
+        } else {
+          // current turns red
+          updated[greenIdx].signal = "red";
+          updated[greenIdx].time = 0;
+
+          // move to next lane
+          let nextIdx = (greenIdx + 1) % updated.length;
+          updated[nextIdx].signal = "green";
+          updated[nextIdx].time = Math.ceil(calculateClearTime(updated[nextIdx].vehicles));
+        }
+        return [...updated];
+      });
     }, 1000);
+
     return () => clearInterval(interval);
   }, []);
 
   const changeIntersection = (id) => {
     setIntersection(id);
-    setLanes(fakeData[id]);
+    setLanes(
+      fakeData[id].map((lane) => ({
+        ...lane,
+        time: lane.signal === "green" ? Math.ceil(calculateClearTime(lane.vehicles)) : 0,
+      }))
+    );
   };
 
   return (
     <div className="inter-font text-gray-800 p-6 min-h-screen">
-      
-
       {/* Intersection Controls */}
       <div className="flex justify-center mb-8">
         <select
@@ -73,7 +132,6 @@ export default function LaneStatus({ ChangeLane }) {
       <div className="relative w-[420px] h-[420px] mx-auto bg-gray-50 border-4 border-gray-300 rounded-xl shadow-md">
         {/* Vertical road */}
         <div className="absolute top-0 bottom-0 left-1/2 w-24 -translate-x-1/2 bg-gray-200"></div>
-
         {/* Horizontal road */}
         <div className="absolute left-0 right-0 top-1/2 h-24 -translate-y-1/2 bg-gray-200"></div>
 
@@ -103,7 +161,7 @@ export default function LaneStatus({ ChangeLane }) {
                 className={`w-10 h-10 rounded-full ${colors[lane.signal]} mb-3 border-2 border-white`}
               ></div>
 
-              {/* Vehicles (small circles) */}
+              {/* Vehicles */}
               <div className="flex gap-1 flex-wrap justify-center max-w-[80px] mb-3">
                 {Array.from({ length: lane.vehicles }).map((_, i) => (
                   <div
@@ -115,43 +173,23 @@ export default function LaneStatus({ ChangeLane }) {
 
               {/* Timer */}
               {lane.signal === "green" && (
-                <div className="text-sm font-bold text-green-700 mb-1">
+                <div className="z-[-1] text-sm font-bold text-green-700 mb-1">
                   {lane.time}s
                 </div>
               )}
 
               {/* Score */}
-              <div className="text-xs font-medium text-gray-700 mb-1">
+              <div className="text-xs z-[-1] font-medium text-gray-700 mb-1">
                 Score: <span className="text-indigo-600">{lane.score}</span>
               </div>
 
               {/* Lane ID */}
-              <div className="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded-md shadow-sm">
+              <div className="text-xs z-[-1] font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded-md shadow-sm">
                 TS-{intersection}0{idx + 1}
               </div>
             </div>
           );
         })}
-      </div>
-
-      {/* Legend */}
-      <div className="text-center mt-12 flex flex-wrap justify-center gap-6">
-        <span className="inline-flex items-center text-sm">
-          <span className="w-4 h-4 bg-green-500 rounded-full mr-2 shadow-sm"></span>
-          Green Lane (Go)
-        </span>
-        <span className="inline-flex items-center text-sm">
-          <span className="w-4 h-4 bg-yellow-300 border border-yellow-600 rounded-full mr-2 shadow-sm"></span>
-          Priority Lane (Next)
-        </span>
-        <span className="inline-flex items-center text-sm">
-          <span className="w-4 h-4 bg-red-400 rounded-full mr-2 shadow-sm"></span>
-          Red Lane (Wait)
-        </span>
-        <span className="inline-flex items-center text-sm">
-          <span className="w-3 h-3 bg-blue-400 rounded-full mr-2 shadow-sm"></span>
-          Vehicle
-        </span>
       </div>
     </div>
   );

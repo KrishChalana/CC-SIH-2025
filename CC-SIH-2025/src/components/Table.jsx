@@ -1,3 +1,5 @@
+// src/components/TrafficTable.jsx
+import React from "react";
 import {
   Table,
   TableBody,
@@ -6,9 +8,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table"
+} from "./ui/table"; // adjust path if your ui/table is elsewhere
+import { calculateTrafficScoreForLane } from "../utils/cpsUtils";
 
-export default function TrafficTable({ Lane }) {
+export default function TrafficTable({ intersections }) {
+  // intersections: { A: { lanes, safety, platoon }, ... }
+  const rows = [];
+
+  Object.entries(intersections).forEach(([intersectionId, data]) => {
+    Object.entries(data.lanes).forEach(([laneId, counts]) => {
+      const totalVeh = Object.values(counts).reduce((a, b) => a + b, 0);
+      const laneScore = calculateTrafficScoreForLane(counts);
+      rows.push({ laneId, intersectionId, counts, totalVeh, laneScore });
+    });
+  });
+
   return (
     <div className="mt-10 mb-10 border-gray-200 border-2 rounded-md p-4 shadow-xl">
       <Table>
@@ -16,84 +30,39 @@ export default function TrafficTable({ Lane }) {
         <TableHeader>
           <TableRow className="bg-gray-100">
             <TableHead className="w-[120px]">Lane Id</TableHead>
+            <TableHead>Intersection</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Vehicle Count</TableHead>
             <TableHead>Bike</TableHead>
             <TableHead>Bus</TableHead>
             <TableHead>Car</TableHead>
+            <TableHead>Truck</TableHead>
             <TableHead>Ambulance</TableHead>
-            <TableHead className="text-right">Average Speed</TableHead>
+            <TableHead className="text-right">Lane Score</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {/* Lane 1 */}
-          <TableRow>
-            <TableCell className="font-medium">{Lane[0]}</TableCell>
-            <TableCell>
-              <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                Open
-              </span>
-            </TableCell>
-            <TableCell>250</TableCell>
-            <TableCell>40</TableCell>
-            <TableCell>10</TableCell>
-            <TableCell>190</TableCell>
-            <TableCell>10</TableCell>
-            <TableCell className="text-right">50 mph</TableCell>
-          </TableRow>
-
-          {/* Lane 2 */}
-          <TableRow>
-            <TableCell className="font-medium">{Lane[1]}</TableCell>
-            <TableCell>
-              <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                Open
-              </span>
-            </TableCell>
-            <TableCell>300</TableCell>
-            <TableCell>60</TableCell>
-            <TableCell>15</TableCell>
-            <TableCell>220</TableCell>
-            <TableCell>5</TableCell>
-            <TableCell className="text-right">40 mph</TableCell>
-          </TableRow>
-
-          {/* Lane 3 */}
-          <TableRow>
-            <TableCell className="font-medium">{Lane[2]}</TableCell>
-            <TableCell>
-              <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                Closed
-              </span>
-            </TableCell>
-            <TableCell>0</TableCell>
-            <TableCell>0</TableCell>
-            <TableCell>0</TableCell>
-            <TableCell>0</TableCell>
-            <TableCell>0</TableCell>
-            <TableCell className="text-right">0 mph</TableCell>
-          </TableRow>
-
-          {/* Lane 4 */}
-          <TableRow>
-            <TableCell className="font-medium">{Lane[3]}</TableCell>
-            <TableCell>
-              <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                Open
-              </span>
-            </TableCell>
-            <TableCell>200</TableCell>
-            <TableCell>30</TableCell>
-            <TableCell>8</TableCell>
-            <TableCell>155</TableCell>
-            <TableCell>7</TableCell>
-            <TableCell className="text-right">55 mph</TableCell>
-          </TableRow>
-
-          {/* Lane 5 (example extra lane) */}
+          {rows.map((r) => (
+            <TableRow key={r.laneId}>
+              <TableCell className="font-medium">{r.laneId}</TableCell>
+              <TableCell>{r.intersectionId}</TableCell>
+              <TableCell>
+                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                  Open
+                </span>
+              </TableCell>
+              <TableCell>{r.totalVeh}</TableCell>
+              <TableCell>{r.counts.bike}</TableCell>
+              <TableCell>{r.counts.bus}</TableCell>
+              <TableCell>{r.counts.car}</TableCell>
+              <TableCell>{r.counts.truck}</TableCell>
+              <TableCell>{r.counts.ambulance}</TableCell>
+              <TableCell className="text-right font-bold">{r.laneScore}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

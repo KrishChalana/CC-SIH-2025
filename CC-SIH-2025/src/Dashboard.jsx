@@ -8,7 +8,21 @@ import { TriangleAlert, Radar, BusFront, Activity } from "lucide-react";
 import LaneStatus from "./LaneStatus";
 import { useState } from "react";
 import { SafetyTable } from "./components/Safetytable";
-import { PriorityScoreTable } from "./components/ProrityScoreTable";
+
+
+
+
+
+// src/Dashboard.jsx
+import React from "react";
+import PriorityScoreTable from "./components/PriorityTable";
+import { generateTrafficData, calculateCPS } from "./utils/cpsUtils";
+
+
+
+
+
+
 
 export default function Dashboard() {
   const [Lane, ChangeLane] = useState([
@@ -17,6 +31,22 @@ export default function Dashboard() {
     "TS-A03",
     "TS-A04",
   ]);
+const [trafficData, setTrafficData] = useState(generateTrafficData());
+
+  function regenerateRandomData() {
+    setTrafficData(generateTrafficData());
+  }
+
+  // compute intersection scores (CPS + breakdown) to pass to PriorityScoreTable
+  const intersectionScores = Object.entries(trafficData.intersections).map(([id, data]) => {
+    const calc = calculateCPS(data);
+    return {
+      id,
+      ...calc,
+    };
+  });
+
+  
 
   return (
     <>
@@ -136,18 +166,18 @@ export default function Dashboard() {
           
          </div>
 
-          <PriorityScoreTable lanes={Lane}/>
-
-
+ 
+      <PriorityScoreTable scores={intersectionScores} />
+   
 
 
 
           </div>
         </div>
-
+           <TrafficTable intersections={trafficData.intersections} />
+   
         {/* Lane Table */}
-                <TrafficTable Lane={Lane} />
-      </div>
+     </div>
     </>
   );
 }

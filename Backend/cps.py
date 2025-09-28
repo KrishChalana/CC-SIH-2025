@@ -31,22 +31,8 @@ CLASS_WEIGHTS = {
 # -------------------------
 # Part 1: Traffic Score
 # -------------------------
-def calculate_traffic_score():
+def calculate_traffic_score(vehicle_counts):
     traffic_score = 0
-    vehicle_counts = {}
-    print("---- Traffic Score Calculator ----")
-    
-    for cls, w_class in CLASS_WEIGHTS.items():
-        while True:
-            try:
-                count = int(input(f"Enter number of {cls}s: "))
-                if count < 0:
-                    print("Please enter a non-negative number.")
-                    continue
-                vehicle_counts[cls] = count
-                break
-            except ValueError:
-                print("Invalid input! Enter integer only.")
     
     print("\n---- Traffic Score per Class ----")
     for cls, count in vehicle_counts.items():
@@ -63,26 +49,9 @@ def calculate_traffic_score():
 # -------------------------
 # Part 2: Safety Penalty
 # -------------------------
-def calculate_safety_penalty():
+def calculate_safety_penalty(hard_brakes,tailgating_events):
     print("==== Safety Penalty Calculator ====\n")
     
-    while True:
-        try:
-            hard_brakes = int(input("Enter number of hard braking events: "))
-            if hard_brakes < 0:
-                continue
-            break
-        except ValueError:
-            print("Enter integer.")
-    
-    while True:
-        try:
-            tailgating_events = int(input("Enter number of tailgating events: "))
-            if tailgating_events < 0:
-                continue
-            break
-        except ValueError:
-            print("Enter integer.")
     
     C_rate = hard_brakes * HARD_BRAKING_POINTS + tailgating_events * TAILGATING_POINTS
     safety_penalty_scaled = C_rate * SAFETY_CONTRIB
@@ -94,35 +63,9 @@ def calculate_safety_penalty():
 # -------------------------
 # Part 3: Green Wave / Priority Bonus
 # -------------------------
-def calculate_green_wave_bonus():
+def calculate_green_wave_bonus(platoon_weight,distance_m,avg_speed_m_s):
     print("==== Green Wave Priority Bonus Calculator ====\n")
     
-    while True:
-        try:
-            platoon_weight = float(input("Enter platoon weight from upstream: "))
-            if platoon_weight < 0:
-                continue
-            break
-        except ValueError:
-            print("Enter number.")
-    
-    while True:
-        try:
-            distance_m = float(input("Enter distance from upstream signal (m): "))
-            if distance_m <= 0:
-                continue
-            break
-        except ValueError:
-            print("Enter number > 0.")
-    
-    while True:
-        try:
-            avg_speed_m_s = float(input("Enter average speed of platoon (m/s): "))
-            if avg_speed_m_s <= 0:
-                continue
-            break
-        except ValueError:
-            print("Enter number > 0.")
     
     ETA = distance_m / avg_speed_m_s
     max_eta = ETA * MAX_ETA_SCALE
@@ -147,13 +90,8 @@ def calculate_cps():
     priority_bonus = calculate_green_wave_bonus() # Part 3
     
     CPS = traffic_score - safety_penalty + priority_bonus
-    
-    print("===== Final CPS Calculation =====")
-    print(f"Traffic Score contribution: {traffic_score:.2f}")
-    print(f"Safety Penalty contribution: -{safety_penalty:.2f}")
-    print(f"Green Wave Priority Bonus contribution: +{priority_bonus:.2f}")
-    print(f"\n✅ Final Comprehensive Priority Score (CPS): {CPS:.2f}")
-
+    return CPS   
+ 
 # -------------------------
 # Run the full CPS calculator
 # -------------------------
